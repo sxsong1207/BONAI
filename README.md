@@ -65,5 +65,8 @@ mamba install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cud
 pip install mmcv-full==1.7.1 -f https://download.openmmlab.com/mmcv/dist/cu117/torch1.13/index.html
 pip install yapf==0.40.1
 pip install -e .
+# with single gpu
 python tools/train.py  --work-dir runs configs/loft_foa/loft_foa_r50_fpn_2x_bonai.py
+# with multi-gpus
+tools/dist_train.sh configs/loft_foa/loft_foa_r50_fpn_2x_bonai.py 2 --work-dir runs
 ```
