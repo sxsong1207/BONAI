@@ -81,8 +81,8 @@ class BONAI(CocoDataset):
 
     def get_properties(self, idx):
         img_id = self.data_infos[idx]['id']
-        ann_ids = self.coco.get_ann_ids(img_ids=[img_id])
-        ann_info = self.coco.load_anns(ann_ids)
+        ann_ids = self.coco.getAnnIds(imgIds=[img_id])
+        ann_info = self.coco.loadAnns(ann_ids)
 
         return ann_info[0].keys()
 

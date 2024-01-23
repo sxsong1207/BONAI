@@ -281,12 +281,12 @@ class LVISV05Dataset(CocoDataset):
                               'install open-mmlab forked lvis first.')
         self.coco = LVIS(ann_file)
         assert not self.custom_classes, 'LVIS custom classes is not supported'
-        self.cat_ids = self.coco.get_cat_ids()
+        self.cat_ids = self.coco.getCatIds()
         self.cat2label = {cat_id: i for i, cat_id in enumerate(self.cat_ids)}
-        self.img_ids = self.coco.get_img_ids()
+        self.img_ids = self.coco.getImgIds()
         data_infos = []
         for i in self.img_ids:
-            info = self.coco.load_imgs([i])[0]
+            info = self.coco.loadImgs([i])[0]
             if info['file_name'].startswith('COCO'):
                 # Convert form the COCO 2014 file naming convention of
                 # COCO_[train/val/test]2014_000000000000.jpg to the 2017
@@ -704,12 +704,12 @@ class LVISV1Dataset(LVISDataset):
                               'install open-mmlab forked lvis first.')
         self.coco = LVIS(ann_file)
         assert not self.custom_classes, 'LVIS custom classes is not supported'
-        self.cat_ids = self.coco.get_cat_ids()
+        self.cat_ids = self.coco.getCatIds()
         self.cat2label = {cat_id: i for i, cat_id in enumerate(self.cat_ids)}
-        self.img_ids = self.coco.get_img_ids()
+        self.img_ids = self.coco.getImgIds()
         data_infos = []
         for i in self.img_ids:
-            info = self.coco.load_imgs([i])[0]
+            info = self.coco.loadImgs([i])[0]
             # coco_url is used in LVISv1 instead of file_name
             # e.g. http://images.cocodataset.org/train2017/000000391895.jpg
             # train/val split in specified in url

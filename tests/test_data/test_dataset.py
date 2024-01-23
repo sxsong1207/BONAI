@@ -98,7 +98,7 @@ def test_dataset_wrapper():
     ]
     dataset_a.data_infos = MagicMock()
     dataset_a.data_infos.__len__.return_value = len_a
-    dataset_a.get_cat_ids = MagicMock(
+    dataset_a.getCatIds = MagicMock(
         side_effect=lambda idx: cat_ids_list_a[idx])
     dataset_b = CustomDataset(
         ann_file=MagicMock(), pipeline=[], test_mode=True, img_prefix='')
@@ -109,23 +109,23 @@ def test_dataset_wrapper():
     ]
     dataset_b.data_infos = MagicMock()
     dataset_b.data_infos.__len__.return_value = len_b
-    dataset_b.get_cat_ids = MagicMock(
+    dataset_b.getCatIds = MagicMock(
         side_effect=lambda idx: cat_ids_list_b[idx])
 
     concat_dataset = ConcatDataset([dataset_a, dataset_b])
     assert concat_dataset[5] == 5
     assert concat_dataset[25] == 15
-    assert concat_dataset.get_cat_ids(5) == cat_ids_list_a[5]
-    assert concat_dataset.get_cat_ids(25) == cat_ids_list_b[15]
+    assert concat_dataset.getCatIds(5) == cat_ids_list_a[5]
+    assert concat_dataset.getCatIds(25) == cat_ids_list_b[15]
     assert len(concat_dataset) == len(dataset_a) + len(dataset_b)
 
     repeat_dataset = RepeatDataset(dataset_a, 10)
     assert repeat_dataset[5] == 5
     assert repeat_dataset[15] == 5
     assert repeat_dataset[27] == 7
-    assert repeat_dataset.get_cat_ids(5) == cat_ids_list_a[5]
-    assert repeat_dataset.get_cat_ids(15) == cat_ids_list_a[5]
-    assert repeat_dataset.get_cat_ids(27) == cat_ids_list_a[7]
+    assert repeat_dataset.getCatIds(5) == cat_ids_list_a[5]
+    assert repeat_dataset.getCatIds(15) == cat_ids_list_a[5]
+    assert repeat_dataset.getCatIds(27) == cat_ids_list_a[7]
     assert len(repeat_dataset) == 10 * len(dataset_a)
 
     category_freq = defaultdict(int)

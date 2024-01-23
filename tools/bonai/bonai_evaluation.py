@@ -122,8 +122,8 @@ class Evaluation():
             list: list for saving to json
         """
         self.coco = COCO(ann_file)
-        self.cat_ids = self.coco.get_cat_ids()
-        self.img_ids = self.coco.get_img_ids()
+        self.cat_ids = self.coco.getCatIds()
+        self.img_ids = self.coco.getImgIds()
 
         csv_parser = bstool.CSVParse(csv_file)
 
@@ -131,7 +131,7 @@ class Evaluation():
         segm_json_results = []
         for idx in tqdm.tqdm(range(len(self.img_ids))):
             img_id = self.img_ids[idx]
-            info = self.coco.load_imgs([img_id])[0]
+            info = self.coco.loadImgs([img_id])[0]
             image_name = bstool.get_basename(info['file_name'])
 
             objects = csv_parser(image_name)

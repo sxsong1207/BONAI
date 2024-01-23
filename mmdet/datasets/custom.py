@@ -124,7 +124,7 @@ class CustomDataset(Dataset):
 
         return self.data_infos[idx]['ann']
 
-    def get_cat_ids(self, idx):
+    def getCatIds(self, idx):
         """Get category ids by index.
 
         Args:

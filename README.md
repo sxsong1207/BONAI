@@ -55,3 +55,15 @@ If you use BONAI dataset, codebase or models in your research, please consider c
   doi={10.1109/TPAMI.2022.3162583}}
 ```
 
+
+## Installation
+
+``` bash
+conda create -n BONAI python=3.10
+conda activate BONAI 
+mamba install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
+pip install mmcv-full==1.7.1 -f https://download.openmmlab.com/mmcv/dist/cu117/torch1.13/index.html
+pip install yapf==0.40.1
+pip install -e .
+python tools/train.py  --work-dir runs configs/loft_foa/loft_foa_r50_fpn_2x_bonai.py
+```

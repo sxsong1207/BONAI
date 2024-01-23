@@ -231,7 +231,7 @@ dataset_A_train = dict(
 ### Class balanced dataset
 
 We use `ClassBalancedDataset` as wrapper to repeat the dataset based on category
-frequency. The dataset to repeat needs to instantiate function `self.get_cat_ids(idx)`
+frequency. The dataset to repeat needs to instantiate function `self.getCatIds(idx)`
 to support `ClassBalancedDataset`.
 For example, to repeat `Dataset_A` with `oversample_thr=1e-3`, the config looks like the following
 ```python

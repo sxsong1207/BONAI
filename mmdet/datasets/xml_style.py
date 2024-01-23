@@ -140,7 +140,7 @@ class XMLDataset(CustomDataset):
             labels_ignore=labels_ignore.astype(np.int64))
         return ann
 
-    def get_cat_ids(self, idx):
+    def getCatIds(self, idx):
         """Get category ids in XML file by index.
 
         Args:
