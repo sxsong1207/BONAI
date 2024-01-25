@@ -66,7 +66,7 @@ pip install mmcv-full==1.7.1 -f https://download.openmmlab.com/mmcv/dist/cu117/t
 pip install yapf==0.40.1
 pip install -e .
 # with single gpu
-python tools/train.py  --work-dir runs configs/loft_foa/loft_foa_r50_fpn_2x_bonai.py
+python tools/train.py  --work-dir runs configs/loft_foa/loft_foa_r50_fpn_4x_bonai_trainval_split.py
 # with multi-gpus
-tools/dist_train.sh configs/loft_foa/loft_foa_r50_fpn_2x_bonai.py 2 --work-dir runs
+tools/dist_train.sh configs/loft_foa/loft_foa_r50_fpn_4x_bonai_trainval_split.py 2 --work-dir runs
 ```

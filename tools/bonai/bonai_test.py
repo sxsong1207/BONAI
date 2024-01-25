@@ -108,7 +108,11 @@ def main():
     if args.city == 'shanghai_xian':
         data_root = './data/BONAI/'
         cfg.data.test.ann_file = data_root + 'coco/bonai_shanghai_xian_test.json'
-        cfg.data.test.img_prefix = data_root + 'test/images/'
+        cfg.data.test.img_prefix = data_root + 'test/'
+    if args.city == 'jax':
+        data_root = './data/BONAI/'
+        cfg.data.test.ann_file = data_root + 'coco/gda_jax_test.json'
+        cfg.data.test.img_prefix = data_root + 'jax/'
     else:
         raise(RuntimeError("do not support the input city: ", len(args.city)))
 
