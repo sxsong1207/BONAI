@@ -752,11 +752,17 @@ class Evaluation:
 
         bstool.mkdir_or_exist(vis_dir)
 
+        # colors = {
+        #     "gt_matched": (0, 255, 0),
+        #     "pred_matched": (255, 255, 0),
+        #     "pred_un_matched": (0, 255, 255),
+        #     "gt_un_matched": (255, 0, 0),
+        # }
         colors = {
             "gt_matched": (0, 255, 0),
-            "pred_matched": (255, 255, 0),
-            "pred_un_matched": (0, 255, 255),
-            "gt_un_matched": (255, 0, 0),
+            "pred_matched": (0, 255, 0),
+            "pred_un_matched": (0, 255, 0),
+            "gt_un_matched": (0, 255, 0),
         }
         objects = self.get_confusion_matrix_indexes(mask_type="roof")
 
@@ -775,7 +781,7 @@ class Evaluation:
 
             height_angle = building["height_angle"]
 
-            img = bstool.draw_height_angle(img, height_angle)
+            # img = bstool.draw_height_angle(img, height_angle)
 
             for gt_polygon, gt_offset, pred_polygon, pred_offset, gt_height in zip(
                 building["gt_polygons_matched"],
@@ -885,11 +891,11 @@ def parse_args():
     #     type=str,
     #     default='',
     #     help='full model name for evaluation')
-    # parser.add_argument(
-    #     '--city',
-    #     type=str,
-    #     default='',
-    #     help='dataset city for evaluation')
+    parser.add_argument(
+        '--city',
+        type=str,
+        default='jax',
+        help='dataset city for evaluation')
 
     args = parser.parse_args()
 
@@ -901,7 +907,7 @@ def get_model_shortname(model_name):
 
 
 class EvaluationParameters:
-    def __init__(self, pkl_file):
+    def __init__(self, pkl_file, city):
         # flags
         self.with_vis = True
         self.with_only_vis = True
@@ -915,7 +921,7 @@ class EvaluationParameters:
 
         model = Path(pkl_file).stem
         # basic info
-        # self.city = city
+        self.city = city
         self.model = model
         self.score_threshold = 0.4
         self.dataset_root = "./data/BONAI"
@@ -925,22 +931,22 @@ class EvaluationParameters:
         mkdir_or_exist(f"{self.pred_result_root}/{model}")
 
         # dataset file
-        # self.anno_file = f"{self.dataset_root}/coco/bonai_shanghai_xian_test.json"
-        # self.test_image_dir = f"{self.dataset_root}/test"
-        
-        self.anno_file = f"{self.dataset_root}/coco/gda_jax_test.json"
-        self.test_image_dir = f"{self.dataset_root}/jax"
-
-        # csv ground truth files
-        # self.gt_roof_csv_file = (
-        #     f"{self.csv_groundtruth_root}/shanghai_xian_v3_merge_val_roof_crop1024_gt_minarea500.csv"
-        # )
-        
-        # self.gt_footprint_csv_file = (
-        #     f"{self.csv_groundtruth_root}/shanghai_xian_v3_merge_val_footprint_crop1024_gt_minarea500.csv"
-        # )
-        self.gt_roof_csv_file = None
-        self.gt_footprint_csv_file = None
+        if self.city == 'shanghai_xian':
+            self.anno_file = f"{self.dataset_root}/coco/bonai_shanghai_xian_test.json"
+            self.test_image_dir = f"{self.dataset_root}/test"
+            # csv ground truth files
+            self.gt_roof_csv_file = (
+                f"{self.csv_groundtruth_root}/shanghai_xian_v3_merge_val_roof_crop1024_gt_minarea500.csv"
+            )
+            
+            self.gt_footprint_csv_file = (
+                f"{self.csv_groundtruth_root}/shanghai_xian_v3_merge_val_footprint_crop1024_gt_minarea500.csv"
+            )
+        else:
+            self.anno_file = f"{self.dataset_root}/coco/gda_jax_test.json"
+            self.test_image_dir = f"{self.dataset_root}/jax"
+            self.gt_roof_csv_file = None
+            self.gt_footprint_csv_file = None
 
         # detection result files
         self.mmdetection_pkl_file = pkl_file
@@ -964,7 +970,7 @@ class EvaluationParameters:
 if __name__ == "__main__":
     args = parse_args()
 
-    eval_parameters = EvaluationParameters(args.pkl)
+    eval_parameters = EvaluationParameters(args.pkl, args.city)
     eval_parameters.post_processing()
     # baseline (mask rcnn) or LOFT
     # eval_parameters.with_offset =  False if get_model_shortname(eval_parameters.model) in eval_parameters.baseline_models else True
